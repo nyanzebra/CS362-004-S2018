@@ -1,0 +1,13 @@
+*.o
+*.gcno
+*.gcda
+*.out
+.DS_Store
+*.dSYM
+*.gcov
+
+
+playdom
+player
+badTestDrawCard
+testDrawCard

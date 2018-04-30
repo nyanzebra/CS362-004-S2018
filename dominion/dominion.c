@@ -312,9 +312,10 @@ int numHandCards(struct gameState *state) {
   return state->handCount[ whoseTurn(state) ];
 }
 
+
 int handCard(int handPos, struct gameState *state) {
-  int currentPlayer = whoseTurn(state);
-  return state->hand[currentPlayer][handPos];
+    int currentPlayer = whoseTurn(state);
+    return state->hand[currentPlayer][handPos];
 }
 
 int supplyCount(int card, struct gameState *state) {
@@ -325,18 +326,15 @@ int fullDeckCount(int player, int card, struct gameState *state) {
   int i;
   int count = 0;
 
-  for (i = 0; i < state->deckCount[player]; i++)
-    {
+  for (i = 0; i < state->deckCount[player]; i++){
       if (state->deck[player][i] == card) count++;
     }
 
-  for (i = 0; i < state->handCount[player]; i++)
-    {
+  for (i = 0; i < state->handCount[player]; i++){
       if (state->hand[player][i] == card) count++;
     }
 
-  for (i = 0; i < state->discardCount[player]; i++)
-    {
+  for (i = 0; i < state->discardCount[player]; i++){
       if (state->discard[player][i] == card) count++;
     }
 
@@ -392,22 +390,18 @@ int isGameOver(struct gameState *state) {
   int j;
 
   //if stack of Province cards is empty, the game ends
-  if (state->supplyCount[province] == 0)
-    {
+  if (state->supplyCount[province] == 0){
       return 1;
     }
 
   //if three supply pile are at 0, the game ends
   j = 0;
-  for (i = 0; i < 25; i++)
-    {
-      if (state->supplyCount[i] == 0)
-	{
+  for (i = 0; i < 25; i++){
+      if (state->supplyCount[i] == 0){
 	  j++;
-	}
-    }
-  if ( j >= 3)
-    {
+      }
+  }
+  if ( j >= 3){
       return 1;
     }
 
@@ -522,8 +516,9 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state) {
   return 0;
 }
 
-int drawCard(int player, struct gameState *state)
-{	int count;
+int drawCard(int player, struct gameState *state){
+
+	int count;
   int deckCounter;
   if (state->deckCount[player] <= 0){//Deck is empty
 
@@ -539,7 +534,7 @@ int drawCard(int player, struct gameState *state)
     state->discardCount[player] = 0;//Reset discard
 
     //Shufffle the deck
-    shuffle(player, state);//Shuffle the deck up and make it so that we can draw
+    shuffle(player, state); //Shuffle the deck up and make it so that we can draw
 
     if (DEBUG){//Debug statements
       printf("Deck count now: %d\n", state->deckCount[player]);
@@ -658,7 +653,7 @@ int adventurerEffect(struct gameState* state, int drawntreasure, int currentPlay
             z++;
         }
     }
-    while(z-1>0){ // bug >= became >
+    while(z-1>=0){ // bug >= became >
         state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
         z=z-1;
     }
@@ -668,7 +663,7 @@ int adventurerEffect(struct gameState* state, int drawntreasure, int currentPlay
 int smithyEffect(struct gameState* state, int handPos, int currentPlayer) {
     int i = 0;
     //+3 Cards
-    for (i = 0; i < 2; i++) // bug was <3 and now < 2
+    for (i = 0; i < 3; i++) // bug was <3 and now < 2
     {
         drawCard(currentPlayer, state);
     }
@@ -681,7 +676,7 @@ int smithyEffect(struct gameState* state, int handPos, int currentPlayer) {
 int council_roomEffect(struct gameState* state, int handPos, int currentPlayer) {
     int i = 0;
     //+4 Cards
-    for (i = 0; i < 3; i++) // bug was i < 4 now i < 3
+    for (i = 0; i < 4; i++) // bug was i < 4 now i < 3
     {
         drawCard(currentPlayer, state);
     }

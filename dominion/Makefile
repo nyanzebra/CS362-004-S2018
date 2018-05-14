@@ -24,16 +24,22 @@ testAll: dominion.o testSuite.c
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
-runtests: testDrawCard 
+runtests: testDrawCard
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
+
+randomAdventurerTests: randomAdventurerTests.c dominion.o rngs.o
+	gcc -o randomAdventurerTests -g randomAdventurerTests.c gameStateRandomizer.c dominion.o rngs.o $(CFLAGS)
+
+randomSmithyTests: randomSmithyTests.c dominion.o rngs.o
+	gcc -o randomSmithyTests -g randomSmithyTests.c gameStateRandomizer.c dominion.o rngs.o $(CFLAGS)
 
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player 
+all: playdom player
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe

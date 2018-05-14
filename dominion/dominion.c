@@ -647,6 +647,7 @@ int adventurerEffect(struct gameState* state, int drawntreasure, int currentPlay
     while(drawntreasure<2){
         if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
             shuffle(currentPlayer, state);
+            //break;
         }
         drawCard(currentPlayer, state);
         cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
@@ -668,7 +669,7 @@ int adventurerEffect(struct gameState* state, int drawntreasure, int currentPlay
 int smithyEffect(struct gameState* state, int handPos, int currentPlayer) {
     int i = 0;
     //+3 Cards
-    for (i = 0; i < 2; i++) // bug was <3 and now < 2
+    for (i = 0; i < 3; i++) // bug was <3 and now < 2
     {
         drawCard(currentPlayer, state);
     }
